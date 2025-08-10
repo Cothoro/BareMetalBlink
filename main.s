@@ -32,31 +32,30 @@ _start:
 
 blink_loop:  
     @ Turn the LED on, finally
-    ldr r0, =GPIOx_ODR
-    ldr r1, [r0]
-    orr r1, r1, #(1<<13)
-    str r1, [r0]
+    ldr r1, =GPIOx_ODR
+    ldr r2, [r1]
+    orr r2, r2, #(1<<13)
+    str r2, [r1]
 
     @ Crude delay
-    mov r2, #0
-delay_loop1:   
-    adds r2, r2, #1
-    ldr r3, =500000
-    cmp r2, r3
-    blt delay_loop1
+    ldr r0, =1000000
+    bl crude_delay
 
     @ Turn the LED off.
-    ldr r0, =GPIOx_ODR
-    ldr r1, [r0]
-    bic r1, r1, #(1<<13)
-    str r1, [r0]
+    ldr r2, [r1]
+    bic r2, r1, #(1<<13)
+    str r2, [r1]
 
     @ Second crude delay
-    mov r2, #0
-delay_loop2:   
-    adds r2, r2, #1
-    ldr r3, =500000
-    cmp r2, r3
-    blt delay_loop2
+    ldr r0, =1000000
+    bl crude_delay
 
     b blink_loop
+
+@ r0 - number of cyles to delay execution
+.thumb_func
+crude_delay:
+delay_loop: 
+    subs r0, r0, #1
+    bne delay_loop
+    bx lr
