@@ -43,7 +43,7 @@ blink_loop:
 
     @ Turn the LED off.
     ldr r2, [r1]
-    bic r2, r1, #(1<<13)
+    bic r2, r2, #(1<<13)
     str r2, [r1]
 
     @ Second crude delay
