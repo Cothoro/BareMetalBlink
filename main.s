@@ -30,9 +30,10 @@ _start:
     orr r1, r1, #(0b01<<26)
     str r1, [r0]
 
+    ldr r1, =GPIOx_ODR
+
 blink_loop:  
     @ Turn the LED on, finally
-    ldr r1, =GPIOx_ODR
     ldr r2, [r1]
     orr r2, r2, #(1<<13)
     str r2, [r1]
@@ -54,8 +55,7 @@ blink_loop:
 
 @ r0 - number of cyles to delay execution
 .thumb_func
-crude_delay:
-delay_loop: 
+crude_delay: 
     subs r0, r0, #1
-    bne delay_loop
+    bne crude_delay
     bx lr
