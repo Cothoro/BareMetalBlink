@@ -2,8 +2,6 @@
 .cpu cortex-m4
 .thumb
 
-.global _start
-
 .extern main
 
 @ Vector Table

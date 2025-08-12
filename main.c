@@ -15,11 +15,14 @@ void crude_wait(uint iters)
 
 void main(void)
 {
+    // Enable the clock for GPOIG
     REG_UINT32(RCC_AHB1ENR) |= (1 << 6);
-    
+
+    // Clear and set pin 13 to an output.
     REG_UINT32(GPIOx_MODER) &= ~(0b01 << 26);
     REG_UINT32(GPIOx_MODER) |=  (0b01 << 26);
-    
+
+    // In a loop, toggle the output of pin 13.
     for (;;) {
         REG_UINT32(GPIOx_ODR) ^= (1 << 13);
         crude_wait(500000);
